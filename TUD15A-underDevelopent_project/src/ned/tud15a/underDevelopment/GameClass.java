@@ -244,7 +244,7 @@ public class GameClass extends JFrame implements KeyListener {
 		if (alreadyWon == false) {
 			for (int row = 0; row < r; row++) {
 				for (int column = 0; column < c; column++) {
-					if (cells[row][column] == 32) {
+					if (cells[row][column] == 2048) {
 						alreadyWon = true;
 						return true;
 					}
