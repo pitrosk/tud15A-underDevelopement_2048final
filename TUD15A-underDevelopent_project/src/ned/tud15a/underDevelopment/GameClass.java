@@ -1,5 +1,7 @@
 package ned.tud15a.underDevelopment;
 
+import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -14,8 +16,18 @@ public class GameClass extends JFrame implements KeyListener {
 	int c = 4;
 	boolean alreadyWon = false;
 
+	NumbersPanel np;
+	SingleSquareField[] ssf;
+
+	Map<Integer, Action> map;
+
 	public GameClass() {
 		initUI();
+		map = new HashMap<Integer, Action>();
+		map.put(KeyEvent.VK_RIGHT, new ActionRight(cells));
+		map.put(KeyEvent.VK_UP, new ActionUp(cells));
+		map.put(KeyEvent.VK_LEFT, new ActionLeft(cells));
+		map.put(KeyEvent.VK_DOWN, new ActionDown(cells));
 	}
 
 	private void initUI() {
@@ -30,26 +42,13 @@ public class GameClass extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int[][] tempMat = new int[4][4];
 		copyMatrix(tempMat, cells);
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			makeMove(3, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			makeMove(1, cells);
+		Action a = map.get(e.getKeyCode());
+		if (a != null) {
+			a.move();
 			if (!equalMatrix(tempMat, cells))
 				placeRandomTwo(returnListOfEmptyFields());
 		}
-
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			makeMove(2, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			makeMove(4, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		}
-
+		np.fillNumbersFromMatrix(cells);
 		repaint();
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(this, "You Won!\nBut you can still play ;)");
@@ -101,143 +100,36 @@ public class GameClass extends JFrame implements KeyListener {
 			int Result = r.nextInt(High - Low) + Low;
 
 			int row, col;
-
-			// System.out.println(Result);
-
 			row = emptyList.get(Result)[0];
 			col = emptyList.get(Result)[1];
 			cells[row][col] = 2;
-			// System.out.println("RANDOM MOVE");
 		}
-	}
-
-	void merge(int d, int[][] cells) {
-		if (d == 1) {
-			for (int j = 0; j < 4; j++) {
-				for (int i = 0; i < 3; i++) {
-					if (cells[i][j] == cells[i + 1][j]) {
-						cells[i][j] = 2 * cells[i][j];
-						cells[i + 1][j] = 0;
-					}
-				}
-			}
-		} else if (d == 2) {
-			for (int i = 0; i < 4; i++) {
-				for (int j = 3; j > 0; j--) {
-					if (cells[i][j] == cells[i][j - 1]) {
-						cells[i][j] = 2 * cells[i][j];
-						cells[i][j - 1] = 0;
-					}
-				}
-			}
-		} else if (d == 3) {
-			for (int j = 0; j < 4; j++) {
-				for (int i = 3; i > 0; i--) {
-					if (cells[i][j] == cells[i - 1][j]) {
-						cells[i][j] = 2 * cells[i][j];
-						cells[i - 1][j] = 0;
-					}
-				}
-			}
-		} else {
-			for (int i = 0; i < 4; i++) {
-				for (int j = 0; j < 3; j++) {
-					if (cells[i][j] == cells[i][j + 1]) {
-						cells[i][j] = 2 * cells[i][j];
-						cells[i][j + 1] = 0;
-					}
-				}
-			}
-		}
-	}
-
-	void shift(int d, int[][] cells) {
-		if (d == 1) {
-			for (int j = 0; j < 4; j++) {
-				int[] tab = { 0, 0, 0, 0 };
-				int index = 0;
-				for (int i = 0; i < 4; i++) {
-					if (cells[i][j] != 0) {
-						tab[index] = cells[i][j];
-						index++;
-					}
-				}
-				for (int p = 0; p < 4; p++) {
-					cells[p][j] = tab[p];
-				}
-
-			}
-		} else if (d == 2) {
-			for (int i = 0; i < 4; i++) {
-				int[] tab = { 0, 0, 0, 0 };
-				int index = 0;
-				for (int j = 3; j > -1; j--) {
-					if (cells[i][j] != 0) {
-						tab[index] = cells[i][j];
-						index++;
-					}
-				}
-				for (int p = 3; p > -1; p--) {
-					cells[i][p] = tab[3 - p];
-				}
-
-			}
-		} else if (d == 3) {
-			for (int j = 0; j < 4; j++) {
-				int[] tab = { 0, 0, 0, 0 };
-				int index = 0;
-				for (int i = 3; i > -1; i--) {
-					if (cells[i][j] != 0) {
-						tab[index] = cells[i][j];
-						index++;
-					}
-				}
-				for (int p = 3; p > -1; p--) {
-					cells[p][j] = tab[3 - p];
-				}
-
-			}
-		} else {
-			for (int i = 0; i < 4; i++) {
-				int[] tab = { 0, 0, 0, 0 };
-				int index = 0;
-				for (int j = 0; j < 4; j++) {
-					if (cells[i][j] != 0) {
-						tab[index] = cells[i][j];
-						index++;
-					}
-				}
-				for (int p = 0; p < 4; p++) {
-					cells[i][p] = tab[p];
-				}
-
-			}
-		}
-	}
-
-	/**
-	 * @param direction
-	 */
-	void makeMove(int direction, int[][] cells) {
-
-		shift(direction, cells);
-		merge(direction, cells);
-		shift(direction, cells);
-		//
 	}
 
 	boolean checkEnd() {
 
-		boolean ok = true;
-		int d = 1;
-		copyMatrix(cellsCopy, cells);
-		while (d < 5 && ok) {
-			makeMove(d, cellsCopy);
-			if (!equalMatrix(cellsCopy, cells))
-				return false;
-			d++;
+		ArrayList<int[]> emptyList = new ArrayList<int[]>();
+		emptyList = returnListOfEmptyFields();
+
+		if (emptyList.size() != 0)
+			return false;
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (cells[i][j] == cells[i + 1][j])
+					return false;
+			}
 		}
+
+		for (int j = 0; j < 3; j++) {
+			for (int i = 0; i < 4; i++) {
+				if (cells[i][j] == cells[i][j + 1])
+					return false;
+			}
+		}
+
 		return true;
+
 	}
 
 	public boolean checkWin() {
@@ -251,18 +143,7 @@ public class GameClass extends JFrame implements KeyListener {
 				}
 			}
 		}
-
 		return false;
-	}
-
-	// unused
-	void printMatrix(int[][] tab) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				System.out.print(tab[i][j] + " | ");
-			}
-			System.out.println("");
-		}
 	}
 
 	void copyMatrix(int[][] target, int[][] source) {
@@ -284,13 +165,20 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		GameClass gc = new GameClass();
-		NumberFields nf = new NumberFields(gc.cells);
-		gc.add(nf);
+		gc.ssf = new SingleSquareField[16];
+		for (int i = 0; i < gc.ssf.length; i++) {
+			gc.ssf[i] = new SingleSquareField();
+		}
+		gc.np = new NumbersPanel(gc.ssf);
+		gc.np.setLayout(new GridLayout(4, 4));
+		gc.add(gc.np);
+
 		gc.setVisible(true);
 		gc.placeRandomTwo(gc.returnListOfEmptyFields());
+		gc.np.fillNumbersFromMatrix(gc.cells);
 		gc.repaint();
+
 	}
 
 }
