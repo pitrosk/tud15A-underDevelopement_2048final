@@ -195,7 +195,6 @@ public class GameClass extends JFrame implements KeyListener {
 				for (int p = 3; p > -1; p--) {
 					cells[p][j] = tab[3 - p];
 				}
-
 			}
 		} else {
 			for (int i = 0; i < 4; i++) {
@@ -215,15 +214,11 @@ public class GameClass extends JFrame implements KeyListener {
 		}
 	}
 
-	/**
-	 * @param direction
-	 */
 	void makeMove(int direction, int[][] cells) {
 
 		shift(direction, cells);
 		merge(direction, cells);
 		shift(direction, cells);
-		//
 	}
 
 	boolean checkEnd() {
@@ -251,7 +246,6 @@ public class GameClass extends JFrame implements KeyListener {
 				}
 			}
 		}
-
 		return false;
 	}
 
