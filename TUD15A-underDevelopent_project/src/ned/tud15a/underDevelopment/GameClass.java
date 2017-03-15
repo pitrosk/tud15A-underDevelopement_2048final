@@ -17,9 +17,17 @@ public class GameClass extends JFrame implements KeyListener {
 	boolean alreadyWon = false;
 
 	NumbersPanel np;
-	SingleSquareField [] ssf;
+	SingleSquareField[] ssf;
+
+	Map<Integer, Action> map;
+
 	public GameClass() {
 		initUI();
+		map = new HashMap<Integer, Action>();
+		map.put(KeyEvent.VK_RIGHT, new ActionRight(cells));
+		map.put(KeyEvent.VK_UP, new ActionUp(cells));
+		map.put(KeyEvent.VK_LEFT, new ActionLeft(cells));
+		map.put(KeyEvent.VK_DOWN, new ActionDown(cells));
 	}
 
 	private void initUI() {
@@ -29,28 +37,27 @@ public class GameClass extends JFrame implements KeyListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
 	}
-	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int[][] tempMat = new int[4][4];
 		copyMatrix(tempMat, cells);
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			makeMove(3, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			makeMove(1, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		}
-
-		else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			makeMove(2, cells);
-			if (!equalMatrix(tempMat, cells))
-				placeRandomTwo(returnListOfEmptyFields());
-		} else if (e.getKeyCode() == KeyEvent.VK_UP) {
-			makeMove(4, cells);
+		/*
+		 * if (e.getKeyCode() == KeyEvent.VK_RIGHT) { makeMove(3, cells); if
+		 * (!equalMatrix(tempMat, cells))
+		 * placeRandomTwo(returnListOfEmptyFields()); } else if (e.getKeyCode()
+		 * == KeyEvent.VK_LEFT) { makeMove(1, cells); if (!equalMatrix(tempMat,
+		 * cells)) placeRandomTwo(returnListOfEmptyFields()); }
+		 * 
+		 * else if (e.getKeyCode() == KeyEvent.VK_DOWN) { makeMove(2, cells); if
+		 * (!equalMatrix(tempMat, cells))
+		 * placeRandomTwo(returnListOfEmptyFields()); } else if (e.getKeyCode()
+		 * == KeyEvent.VK_UP) { makeMove(4, cells); if (!equalMatrix(tempMat,
+		 * cells)) placeRandomTwo(returnListOfEmptyFields()); }
+		 */
+		Action a = map.get(e.getKeyCode());
+		if (a != null) {
+			a.move();
 			if (!equalMatrix(tempMat, cells))
 				placeRandomTwo(returnListOfEmptyFields());
 		}
@@ -255,14 +262,11 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	// unused
-/*	void printMatrix(int[][] tab) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				System.out.print(tab[i][j] + " | ");
-			}
-			System.out.println("");
-		}
-	}*/
+	/*
+	 * void printMatrix(int[][] tab) { for (int i = 0; i < 4; i++) { for (int j
+	 * = 0; j < 4; j++) { System.out.print(tab[i][j] + " | "); }
+	 * System.out.println(""); } }
+	 */
 
 	void copyMatrix(int[][] target, int[][] source) {
 		for (int i = 0; i < 4; i++) {
@@ -283,19 +287,18 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		GameClass gc = new GameClass();
 		gc.ssf = new SingleSquareField[16];
 		for (int i = 0; i < gc.ssf.length; i++) {
 			gc.ssf[i] = new SingleSquareField();
 		}
-		//gc.ssf[3].setCol(new Color(255,0,0));
+		// gc.ssf[3].setCol(new Color(255,0,0));
 		gc.np = new NumbersPanel(gc.ssf);
-		gc.np.setLayout(new GridLayout(4,4));
+		gc.np.setLayout(new GridLayout(4, 4));
 		gc.add(gc.np);
-		//NumberFields nf = new NumberFields(gc.cells);
-		//gc.add(nf);
-		
+		// NumberFields nf = new NumberFields(gc.cells);
+		// gc.add(nf);
+
 		gc.setVisible(true);
 		gc.placeRandomTwo(gc.returnListOfEmptyFields());
 		gc.np.fillNumbersFromMatrix(gc.cells);
