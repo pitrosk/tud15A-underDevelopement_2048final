@@ -25,6 +25,7 @@ public class GameClass extends JFrame implements KeyListener {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
 	}
+	
 
 	@Override
 	public void keyPressed(KeyEvent e) {
