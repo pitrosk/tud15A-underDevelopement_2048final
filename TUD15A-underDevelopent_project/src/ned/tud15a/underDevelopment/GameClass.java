@@ -10,11 +10,12 @@ import javax.swing.JOptionPane;
 
 public class GameClass extends JFrame implements KeyListener {
 
-	int[][] cells = new int[4][4];
-	int[][] cellsCopy = new int[4][4];
-	int r = 4;
-	int c = 4;
+	Cells main_cells = Cells.getInstance();
+	int[][] cells = main_cells.matrix.data;
+	//Matrix cellsCopy = new Matrix();
 	boolean alreadyWon = false;
+	int r = main_cells.matrix.data.length;
+	int c = main_cells.matrix.data[0].length;
 
 	NumbersPanel np;
 	SingleSquareField[] ssf;
@@ -24,10 +25,10 @@ public class GameClass extends JFrame implements KeyListener {
 	public GameClass() {
 		initUI();
 		map = new HashMap<Integer, Action>();
-		map.put(KeyEvent.VK_RIGHT, new ActionRight(cells));
-		map.put(KeyEvent.VK_UP, new ActionUp(cells));
-		map.put(KeyEvent.VK_LEFT, new ActionLeft(cells));
-		map.put(KeyEvent.VK_DOWN, new ActionDown(cells));
+		map.put(KeyEvent.VK_RIGHT, new ActionRight());
+		map.put(KeyEvent.VK_UP, new ActionUp());
+		map.put(KeyEvent.VK_LEFT, new ActionLeft());
+		map.put(KeyEvent.VK_DOWN, new ActionDown());
 	}
 
 	private void initUI() {
@@ -40,12 +41,12 @@ public class GameClass extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		int[][] tempMat = new int[4][4];
-		copyMatrix(tempMat, cells);
+		Matrix tempMat = main_cells.matrix.copyMatrix();
+
 		Action a = map.get(e.getKeyCode());
 		if (a != null) {
 			a.move();
-			if (!equalMatrix(tempMat, cells))
+			if (!main_cells.matrix.equalMatrix(tempMat))
 				placeRandomTwo(returnListOfEmptyFields());
 		}
 		np.fillNumbersFromMatrix(cells);
@@ -75,7 +76,7 @@ public class GameClass extends JFrame implements KeyListener {
 	public ArrayList<int[]> returnListOfEmptyFields() {
 
 		ArrayList<int[]> emptyList = new ArrayList<int[]>();
-
+		int[][] cells = main_cells.matrix.data;
 		for (int row = 0; row < r; row++) {
 			for (int column = 0; column < c; column++) {
 
@@ -92,7 +93,7 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	public void placeRandomTwo(ArrayList<int[]> emptyList) {
-
+		int[][] cells = main_cells.matrix.data;
 		if (emptyList.size() != 0) {
 			Random r = new Random();
 			int Low = 0;

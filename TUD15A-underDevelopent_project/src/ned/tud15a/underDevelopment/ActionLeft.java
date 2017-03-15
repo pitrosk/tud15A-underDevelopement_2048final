@@ -3,22 +3,23 @@ package ned.tud15a.underDevelopment;
 import java.awt.event.KeyEvent;
 
 public class ActionLeft implements Action {
-	int cells [][];
-	public ActionLeft(int[][] matrix) {
-		cells = matrix;
-	}
+	Cells main_cells = Cells.getInstance();
+	int[][] cells = main_cells.matrix.data;
+	int r = main_cells.matrix.data.length;
+	int c = main_cells.matrix.data[0].length;
+	public ActionLeft() { }
 
 	private void shift() {
-		for (int j = 0; j < 4; j++) {
-			int[] tab = { 0, 0, 0, 0 };
+		for (int j = 0; j < cells[0].length; j++) {
+			int[] tab = new int[cells.length];
 			int index = 0;
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < cells.length; i++) {
 				if (cells[i][j] != 0) {
 					tab[index] = cells[i][j];
 					index++;
 				}
 			}
-			for (int p = 0; p < 4; p++) {
+			for (int p = 0; p < cells.length; p++) {
 				cells[p][j] = tab[p];
 			}
 
@@ -26,8 +27,8 @@ public class ActionLeft implements Action {
 	}
 
 	private void merge() {
-		for (int j = 0; j < 4; j++) {
-			for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < c; j++) {
+			for (int i = 0; i < r-1; i++) {
 				if (cells[i][j] == cells[i + 1][j]) {
 					cells[i][j] = 2 * cells[i][j];
 					cells[i + 1][j] = 0;
