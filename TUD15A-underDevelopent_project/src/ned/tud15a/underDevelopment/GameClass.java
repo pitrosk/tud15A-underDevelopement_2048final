@@ -1,5 +1,6 @@
 package ned.tud15a.underDevelopment;
 
+import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
@@ -14,6 +15,8 @@ public class GameClass extends JFrame implements KeyListener {
 	int c = 4;
 	boolean alreadyWon = false;
 
+	NumbersPanel np;
+	SingleSquareField [] ssf;
 	public GameClass() {
 		initUI();
 	}
@@ -50,7 +53,7 @@ public class GameClass extends JFrame implements KeyListener {
 			if (!equalMatrix(tempMat, cells))
 				placeRandomTwo(returnListOfEmptyFields());
 		}
-
+		np.fillNumbersFromMatrix(cells);
 		repaint();
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(this, "You Won!\nBut you can still play ;)");
@@ -251,14 +254,14 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	// unused
-	void printMatrix(int[][] tab) {
+/*	void printMatrix(int[][] tab) {
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
 				System.out.print(tab[i][j] + " | ");
 			}
 			System.out.println("");
 		}
-	}
+	}*/
 
 	void copyMatrix(int[][] target, int[][] source) {
 		for (int i = 0; i < 4; i++) {
@@ -281,10 +284,20 @@ public class GameClass extends JFrame implements KeyListener {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GameClass gc = new GameClass();
-		NumberFields nf = new NumberFields(gc.cells);
-		gc.add(nf);
+		gc.ssf = new SingleSquareField[16];
+		for (int i = 0; i < gc.ssf.length; i++) {
+			gc.ssf[i] = new SingleSquareField();
+		}
+		
+		gc.np = new NumbersPanel(gc.ssf);
+		gc.np.setLayout(new GridLayout(4,4));
+		gc.add(gc.np);
+		//NumberFields nf = new NumberFields(gc.cells);
+		//gc.add(nf);
+		
 		gc.setVisible(true);
 		gc.placeRandomTwo(gc.returnListOfEmptyFields());
+		gc.np.fillNumbersFromMatrix(gc.cells);
 		gc.repaint();
 	}
 
