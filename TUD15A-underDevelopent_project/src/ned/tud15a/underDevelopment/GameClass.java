@@ -1,5 +1,6 @@
 package ned.tud15a.underDevelopment;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -288,7 +289,7 @@ public class GameClass extends JFrame implements KeyListener {
 		for (int i = 0; i < gc.ssf.length; i++) {
 			gc.ssf[i] = new SingleSquareField();
 		}
-		
+		//gc.ssf[3].setCol(new Color(255,0,0));
 		gc.np = new NumbersPanel(gc.ssf);
 		gc.np.setLayout(new GridLayout(4,4));
 		gc.add(gc.np);
