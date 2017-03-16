@@ -22,17 +22,20 @@ public class GameClass extends JFrame implements KeyListener {
 
 	Cells main_cells = Cells.getInstance();
 	int[][] cells = main_cells.matrix.data;
-	// Matrix cellsCopy = new Matrix();
+	
 	boolean alreadyWon = false;
 	int r = main_cells.matrix.data.length;
 	int c = main_cells.matrix.data[0].length;
 
 	NumbersPanel np;
 	JPanel topPanel = new JPanel(new GridLayout(1, 4));
+	
 	SingleSquareField[] ssf;
-	ScoreLabel score = new ScoreLabel();
-	Subject sbj = new Subject();
-	ScoreObserver scob = new ScoreObserver(sbj, score);
+	ScoreDisplay score = new ScoreDisplay();
+	
+	ScoreInformer sbj = new ScoreInformer();
+	ScoreDisplayObserver scob = new ScoreDisplayObserver(sbj, score);
+	
 	Map<Integer, Action> map;
 
 	public GameClass() {

@@ -10,10 +10,10 @@ import java.awt.RenderingHints;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
-public class ScoreLabel extends JComponent {
+public class ScoreDisplay extends JComponent {
 	int actualScore;
 
-	public ScoreLabel() {
+	public ScoreDisplay() {
 		setPreferredSize(new Dimension(120, 30));
 		actualScore = 0;
 	}

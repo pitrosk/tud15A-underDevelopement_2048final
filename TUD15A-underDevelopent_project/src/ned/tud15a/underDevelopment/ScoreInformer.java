@@ -3,9 +3,9 @@ package ned.tud15a.underDevelopment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Subject {
+public class ScoreInformer {
 
-	private List<Observer> observers = new ArrayList<Observer>();
+	private List<ScoreObserver> scoreObservers = new ArrayList<ScoreObserver>();
 	private int state;
 
 	public int getState() {
@@ -17,13 +17,13 @@ public class Subject {
 		notifyAllObservers();
 	}
 
-	public void attach(Observer observer) {
-		observers.add(observer);
+	public void attach(ScoreObserver scoreObserver) {
+		scoreObservers.add(scoreObserver);
 	}
 
 	public void notifyAllObservers() {
-		for (Observer observer : observers) {
-			observer.update();
+		for (ScoreObserver scoreObserver : scoreObservers) {
+			scoreObserver.update();
 		}
 	}
 }

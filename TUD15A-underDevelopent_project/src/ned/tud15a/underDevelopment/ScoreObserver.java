@@ -1,18 +1,7 @@
 package ned.tud15a.underDevelopment;
 
-public class ScoreObserver extends Observer {
-	int score = 0;
-	ScoreLabel scoreLabel;
+abstract class ScoreObserver {
+	protected ScoreInformer scoreInformer;
 
-	public ScoreObserver(Subject subject, ScoreLabel scoreLab) {
-		this.subject = subject;
-		this.subject.attach(this);
-		scoreLabel = scoreLab;
-	}
-
-	@Override
-	public void update() {
-		score += subject.getState();
-		scoreLabel.updateScore(score);
-	}
+	public abstract void update();
 }
