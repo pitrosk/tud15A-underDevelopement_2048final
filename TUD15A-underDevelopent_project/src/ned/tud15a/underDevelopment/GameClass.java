@@ -32,7 +32,7 @@ public class GameClass extends JFrame implements KeyListener {
 	SingleSquareField[] ssf;
 	ScoreLabel score = new ScoreLabel();
 	Subject sbj = new Subject();
-	ScoreObserver scob = new ScoreObserver(sbj,score);
+	ScoreObserver scob = new ScoreObserver(sbj, score);
 	Map<Integer, Action> map;
 
 	public GameClass() {
@@ -89,7 +89,7 @@ public class GameClass extends JFrame implements KeyListener {
 		np.fillNumbersFromMatrix(cells);
 		repaint();
 		topPanel.repaint();
-		
+
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(this, "You Won!\nBut you can still play ;)");
 		}
@@ -185,11 +185,11 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		//SwingUtilities.invokeLater(new Runnable() {
-			//public void run() {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
 				GameClass gc = new GameClass();
 				gc.setVisible(true);
-			//}
-	//	});
+			}
+		});
 	}
 }
