@@ -1,7 +1,5 @@
 package ned.tud15a.underDevelopment;
 
-import java.awt.GridLayout;
-
 import javax.swing.JPanel;
 
 public class NumbersPanel extends JPanel {
@@ -11,7 +9,6 @@ public class NumbersPanel extends JPanel {
 		for (int i = 0; i < ssf.length; i++) {
 			add(ssf[i]);
 		}
-		setLayout(new GridLayout(4, 4));
 	}
 	
 	public void fillNumbersFromMatrix(int [][] mat){
