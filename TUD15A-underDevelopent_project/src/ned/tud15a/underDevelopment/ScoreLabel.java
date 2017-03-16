@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 
 public class ScoreLabel extends JComponent {
 	int actualScore;
-	int i = 0;
 
 	public ScoreLabel() {
 		setPreferredSize(new Dimension(120, 30));
@@ -20,7 +19,6 @@ public class ScoreLabel extends JComponent {
 	}
 
 	public void paintComponent(Graphics g) {
-		System.err.println(i);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setFont(new Font("Arial", Font.PLAIN, 20));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
@@ -28,8 +26,6 @@ public class ScoreLabel extends JComponent {
 	}
 
 	public void updateScore(int score) {
-		i++;
-		System.err.println(score);
 		actualScore = score;
 	}
 }

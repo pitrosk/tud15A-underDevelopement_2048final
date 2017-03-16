@@ -12,7 +12,6 @@ public class ScoreObserver extends Observer {
 
 	@Override
 	public void update() {
-		System.out.println(score);
 		score += subject.getState();
 		scoreLabel.updateScore(score);
 	}

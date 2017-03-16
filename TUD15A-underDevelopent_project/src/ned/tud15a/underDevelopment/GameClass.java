@@ -88,7 +88,6 @@ public class GameClass extends JFrame implements KeyListener {
 		}
 		np.fillNumbersFromMatrix(cells);
 		repaint();
-		topPanel.repaint();
 
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(this, "You Won!\nBut you can still play ;)");
