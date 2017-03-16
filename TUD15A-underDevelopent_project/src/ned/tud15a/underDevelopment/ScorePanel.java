@@ -6,8 +6,8 @@ import java.awt.LayoutManager;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
-	
 	public ScorePanel(LayoutManager layout, ScoreDisplay score) {
 		super(layout);
 		add(new JLabel(""));
