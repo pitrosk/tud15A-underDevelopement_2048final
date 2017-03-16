@@ -11,15 +11,18 @@ public class ActionDown implements Action {
 
 	}
 
-	private void merge() {
+	private int merge() {
+		int add=0;
 		for (int j = 0; j < c; j++) {
 			for (int i = r-1; i > 0; i--) {
 				if (cells[i][j] == cells[i - 1][j]) {
 					cells[i][j] = 2 * cells[i][j];
+					add += cells[i][j];
 					cells[i - 1][j] = 0;
 				}
 			}
 		}
+		return add;
 	}
 
 	private void shift() {
@@ -40,10 +43,12 @@ public class ActionDown implements Action {
 
 	}
 
-	public void move() {
+	public int move() {
+		int sum;
 		shift();
-		merge();
+		sum = merge();
 		shift();
+		return sum;
 
 	}
 

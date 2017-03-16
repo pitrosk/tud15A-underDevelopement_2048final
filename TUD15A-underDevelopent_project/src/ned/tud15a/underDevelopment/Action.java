@@ -4,6 +4,6 @@ import java.awt.event.KeyEvent;
 
 public interface Action {
 
-	void move();
+	int move();
 	
 }
