@@ -1,7 +1,6 @@
 package ned.tud15a.underDevelopment;
 
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
 import javax.swing.JLabel;
