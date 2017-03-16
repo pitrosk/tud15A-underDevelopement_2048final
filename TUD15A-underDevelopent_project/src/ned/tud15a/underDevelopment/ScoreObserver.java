@@ -15,5 +15,4 @@ public class ScoreObserver extends Observer {
 		score += subject.getState();
 		scoreLabel.updateScore(score);
 	}
-
 }

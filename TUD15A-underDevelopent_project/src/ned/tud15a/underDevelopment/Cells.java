@@ -5,7 +5,7 @@ public class Cells {
 	public final Matrix matrix;
 	private static Cells uniqueInstance;
 
-	public Cells() {
+	private Cells() {
 		matrix = new Matrix();
 	}
 

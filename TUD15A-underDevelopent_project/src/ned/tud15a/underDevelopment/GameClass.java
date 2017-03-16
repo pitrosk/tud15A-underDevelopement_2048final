@@ -87,6 +87,7 @@ public class GameClass extends JFrame implements KeyListener {
 				placeRandomTwo(returnListOfEmptyFields());
 		}
 		np.fillNumbersFromMatrix(cells);
+
 		repaint();
 
 		if (checkWin()) {
@@ -94,7 +95,6 @@ public class GameClass extends JFrame implements KeyListener {
 		}
 		if (checkEnd()) {
 			JOptionPane.showMessageDialog(this, "GAME OVER");
-			// System.out.println("GAME OVER");
 		}
 
 	}
