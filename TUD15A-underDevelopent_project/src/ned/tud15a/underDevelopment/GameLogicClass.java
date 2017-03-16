@@ -38,6 +38,11 @@ public class GameLogicClass implements KeyListener {
 		map.put(KeyEvent.VK_UP, new ActionUp());
 		map.put(KeyEvent.VK_LEFT, new ActionLeft());
 		map.put(KeyEvent.VK_DOWN, new ActionDown());
+		
+		map.put(KeyEvent.VK_A, new ActionUpRight());
+		map.put(KeyEvent.VK_B, new ActionDownRight());
+		map.put(KeyEvent.VK_C, new ActionDownLeft());
+		map.put(KeyEvent.VK_D, new ActionUpLeft());
 	}
 
 	@Override
