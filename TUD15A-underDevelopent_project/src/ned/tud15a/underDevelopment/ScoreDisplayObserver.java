@@ -9,7 +9,10 @@ public class ScoreDisplayObserver extends ScoreObserver {
 		this.scoreInformer.attach(this);
 		scoreDisplay = scoreLab;
 	}
-
+	public void restart(){
+		score = 0;
+		scoreDisplay.updateScore(score);
+	}
 	@Override
 	public void update() {
 		score += scoreInformer.getState();

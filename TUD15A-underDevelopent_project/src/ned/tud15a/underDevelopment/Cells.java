@@ -15,5 +15,13 @@ public class Cells {
 		}
 		return uniqueInstance;
 	}
+
+	public void zeroTheMatrix() {
+		for (int i = 0; i < matrix.data.length; i++) {
+			for (int j = 0; j < matrix.data[0].length; j++) {
+				matrix.data[i][j] = 0;
+			}
+		}
+	}
 	// other useful methods here
 }

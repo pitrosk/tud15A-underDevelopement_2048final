@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class GameLogicClass implements KeyListener {
 	GameWindowClass gwc;
 	Cells main_cells = Cells.getInstance();
-	
+
 	int[][] cells = main_cells.matrix.data;
 
 	boolean alreadyWon = false;
@@ -38,7 +38,7 @@ public class GameLogicClass implements KeyListener {
 		map.put(KeyEvent.VK_UP, new ActionUp());
 		map.put(KeyEvent.VK_LEFT, new ActionLeft());
 		map.put(KeyEvent.VK_DOWN, new ActionDown());
-		
+
 		map.put(KeyEvent.VK_A, new ActionUpRight());
 		map.put(KeyEvent.VK_B, new ActionDownRight());
 		map.put(KeyEvent.VK_C, new ActionDownLeft());
@@ -59,11 +59,21 @@ public class GameLogicClass implements KeyListener {
 		}
 		gwc.np.fillNumbersFromMatrix(cells);
 		gwc.repaint();
+
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(gwc, "You Won!\nBut you can still play ;)");
 		}
 		if (checkEnd()) {
-			JOptionPane.showMessageDialog(gwc, "GAME OVER");
+			String[] options = { "Play again!", "End game" };
+			int choice = JOptionPane.showOptionDialog(gwc, "Game over!\nDo you wanna play one more time?", "GAME OVER",
+					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, "Play again!");
+			//System.out.println(choice);
+
+			if (choice == 0) {
+				playAgain();
+			} else {
+				// end game
+			}
 		}
 	}
 
@@ -79,7 +89,16 @@ public class GameLogicClass implements KeyListener {
 		placeRandomNumber(returnListOfEmptyFields());
 		gwc.np.fillNumbersFromMatrix(cells);
 	}
-
+	
+	public void playAgain(){
+		main_cells.zeroTheMatrix();
+		placeRandomNumber(returnListOfEmptyFields());
+		gwc.np.fillNumbersFromMatrix(cells);
+		scObs.restart();
+		//scObs.score = 0;// TODO: make setter
+		gwc.repaint();
+	}
+	
 	public boolean checkWin() {
 		if (alreadyWon == false) {
 			for (int row = 0; row < r; row++) {
