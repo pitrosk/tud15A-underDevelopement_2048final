@@ -61,6 +61,7 @@ public class GameClass extends JFrame implements KeyListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
+		
 
 		ssf = new SingleSquareField[16];
 		for (int i = 0; i < ssf.length; i++) {
@@ -74,6 +75,7 @@ public class GameClass extends JFrame implements KeyListener {
 		topPanel.add(new JLabel(""));
 		topPanel.add(new JLabel(""));
 		topPanel.add(score);
+		topPanel.setBackground(new Color(0, 0, 0));
 		add(topPanel, BorderLayout.NORTH);
 	}
 

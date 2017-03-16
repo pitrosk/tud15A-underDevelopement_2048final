@@ -1,5 +1,6 @@
 package ned.tud15a.underDevelopment;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
@@ -13,6 +14,8 @@ public class NumbersPanel extends JPanel {
 			add(ssf[i]);
 		}
 		setLayout(new GridLayout(4, 4));
+
+		setBackground(new Color(0, 0, 0));
 	}
 
 	public void fillNumbersFromMatrix(int[][] mat) {
