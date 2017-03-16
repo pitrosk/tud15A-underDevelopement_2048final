@@ -2,22 +2,17 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.sun.javafx.event.EventQueue;
-
+@SuppressWarnings("serial")
 public class GameClass extends JFrame implements KeyListener {
 
 	Cells main_cells = Cells.getInstance();

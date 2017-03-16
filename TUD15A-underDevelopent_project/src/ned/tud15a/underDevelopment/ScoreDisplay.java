@@ -8,8 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
+@SuppressWarnings("serial")
 public class ScoreDisplay extends JComponent {
 	int actualScore;
 

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class NumbersPanel extends JPanel {
 	SingleSquareField[] sisf;
 

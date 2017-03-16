@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
+@SuppressWarnings("serial")
 public class SingleSquareField extends JComponent {
 	int number;
 	Color col;
