@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
@@ -33,7 +34,10 @@ public class SingleSquareField extends JComponent {
 		
 		col = new Color(tmp, 0, 0);
 		g2d.setColor(col);
-		g2d.setFont(new Font("TimesRoman", Font.BOLD, 48));
+		g2d.setRenderingHint(
+		        RenderingHints.KEY_TEXT_ANTIALIASING,
+		        RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		g2d.setFont(new Font("Arial", Font.PLAIN, 48));
 		g2d.drawString(Integer.toString(number), 75, 75);
 		// 
 	}

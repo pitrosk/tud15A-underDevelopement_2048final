@@ -1,29 +1,48 @@
 package ned.tud15a.underDevelopment;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.*;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+import com.sun.javafx.event.EventQueue;
 
 public class GameClass extends JFrame implements KeyListener {
 
 	Cells main_cells = Cells.getInstance();
 	int[][] cells = main_cells.matrix.data;
-	//Matrix cellsCopy = new Matrix();
+	// Matrix cellsCopy = new Matrix();
 	boolean alreadyWon = false;
 	int r = main_cells.matrix.data.length;
 	int c = main_cells.matrix.data[0].length;
 
 	NumbersPanel np;
 	SingleSquareField[] ssf;
-
+	ScoreLabel score = new ScoreLabel();
+	Subject sbj = new Subject();
+	ScoreObserver scob = new ScoreObserver(sbj,score);
 	Map<Integer, Action> map;
 
 	public GameClass() {
 		initUI();
+		initLogic();
+		repaint();
+	}
+
+	private void initLogic() {
+		placeRandomTwo(returnListOfEmptyFields());
+		np.fillNumbersFromMatrix(cells);
 		map = new HashMap<Integer, Action>();
 		map.put(KeyEvent.VK_RIGHT, new ActionRight());
 		map.put(KeyEvent.VK_UP, new ActionUp());
@@ -34,9 +53,26 @@ public class GameClass extends JFrame implements KeyListener {
 	private void initUI() {
 		setTitle("2048 - the game");
 		setSize(640, 640);
+		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		addKeyListener(this);
+
+		ssf = new SingleSquareField[16];
+		for (int i = 0; i < ssf.length; i++) {
+			ssf[i] = new SingleSquareField();
+		}
+
+		np = new NumbersPanel(ssf);
+		add(np, BorderLayout.CENTER);
+
+		JPanel topPanel = new JPanel(new GridLayout(1, 4));
+		score = new ScoreLabel();
+		topPanel.add(new JLabel(""));
+		topPanel.add(new JLabel(""));
+		topPanel.add(new JLabel(""));
+		topPanel.add(score);
+		add(topPanel, BorderLayout.NORTH);
 	}
 
 	@Override
@@ -45,7 +81,9 @@ public class GameClass extends JFrame implements KeyListener {
 
 		Action a = map.get(e.getKeyCode());
 		if (a != null) {
-			a.move();
+			int sum = a.move();
+			if (sum > 0)
+				sbj.setState(sum);
 			if (!main_cells.matrix.equalMatrix(tempMat))
 				placeRandomTwo(returnListOfEmptyFields());
 		}
@@ -128,9 +166,7 @@ public class GameClass extends JFrame implements KeyListener {
 					return false;
 			}
 		}
-
 		return true;
-
 	}
 
 	public boolean checkWin() {
@@ -147,39 +183,12 @@ public class GameClass extends JFrame implements KeyListener {
 		return false;
 	}
 
-	void copyMatrix(int[][] target, int[][] source) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				target[i][j] = source[i][j];
-			}
-		}
-	}
-
-	boolean equalMatrix(int[][] mat1, int[][] mat2) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (mat1[i][j] != mat2[i][j])
-					return false;
-			}
-		}
-		return true;
-	}
-
 	public static void main(String[] args) {
-		GameClass gc = new GameClass();
-		gc.ssf = new SingleSquareField[16];
-		for (int i = 0; i < gc.ssf.length; i++) {
-			gc.ssf[i] = new SingleSquareField();
-		}
-		gc.np = new NumbersPanel(gc.ssf);
-		gc.np.setLayout(new GridLayout(4, 4));
-		gc.add(gc.np);
-
-		gc.setVisible(true);
-		gc.placeRandomTwo(gc.returnListOfEmptyFields());
-		gc.np.fillNumbersFromMatrix(gc.cells);
-		gc.repaint();
-
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				GameClass gc = new GameClass();
+				gc.setVisible(true);
+			}
+		});
 	}
-
 }
