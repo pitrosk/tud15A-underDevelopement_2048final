@@ -8,12 +8,10 @@ public class ActionLeft implements Action {
 	int r = main_cells.matrix.data.length;
 	int c = main_cells.matrix.data[0].length;
 
-	public ActionLeft() { }
-
 	private int merge() {
-		int add=0;
+		int add = 0;
 		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c-1; j++) {
+			for (int j = 0; j < c - 1; j++) {
 				if (cells[i][j] == cells[i][j + 1]) {
 					cells[i][j] = 2 * cells[i][j];
 					add += cells[i][j];
@@ -37,7 +35,6 @@ public class ActionLeft implements Action {
 			for (int p = 0; p < cells[0].length; p++) {
 				cells[i][p] = tab[p];
 			}
-
 		}
 	}
 
@@ -47,7 +44,6 @@ public class ActionLeft implements Action {
 		sum = merge();
 		shift();
 		return sum;
-
 	}
 
 }
