@@ -51,7 +51,7 @@ public class GameClass extends JFrame implements KeyListener {
 
 	private void initUI() {
 		setTitle("2048 - the game");
-		setSize(640, 640);
+		setSize(720, 640);
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
