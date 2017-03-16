@@ -17,20 +17,20 @@ public class GameClass extends JFrame implements KeyListener {
 
 	Cells main_cells = Cells.getInstance();
 	int[][] cells = main_cells.matrix.data;
-	
+
 	boolean alreadyWon = false;
 	int r = main_cells.matrix.data.length;
 	int c = main_cells.matrix.data[0].length;
 
 	NumbersPanel np;
-	JPanel topPanel = new JPanel(new GridLayout(1, 4));
-	
+	ScorePanel topPanel;
+
 	SingleSquareField[] ssf;
 	ScoreDisplay score = new ScoreDisplay();
-	
+
 	ScoreInformer sbj = new ScoreInformer();
 	ScoreDisplayObserver scob = new ScoreDisplayObserver(sbj, score);
-	
+
 	Map<Integer, Action> map;
 
 	public GameClass() {
@@ -40,7 +40,7 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	private void initLogic() {
-		placeRandomTwo(returnListOfEmptyFields());
+		placeRandomNumber(returnListOfEmptyFields());
 		np.fillNumbersFromMatrix(cells);
 		map = new HashMap<Integer, Action>();
 		map.put(KeyEvent.VK_RIGHT, new ActionRight());
@@ -55,8 +55,8 @@ public class GameClass extends JFrame implements KeyListener {
 		setLayout(new BorderLayout());
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+
 		addKeyListener(this);
-		
 
 		ssf = new SingleSquareField[16];
 		for (int i = 0; i < ssf.length; i++) {
@@ -64,13 +64,9 @@ public class GameClass extends JFrame implements KeyListener {
 		}
 
 		np = new NumbersPanel(ssf);
-		add(np, BorderLayout.CENTER);
+		topPanel = new ScorePanel(new GridLayout(1, 4), score);
 
-		topPanel.add(new JLabel(""));
-		topPanel.add(new JLabel(""));
-		topPanel.add(new JLabel(""));
-		topPanel.add(score);
-		topPanel.setBackground(new Color(0, 0, 0));
+		add(np, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
 	}
 
@@ -84,7 +80,7 @@ public class GameClass extends JFrame implements KeyListener {
 			if (sum > 0)
 				sbj.setState(sum);
 			if (!main_cells.matrix.equalMatrix(tempMat))
-				placeRandomTwo(returnListOfEmptyFields());
+				placeRandomNumber(returnListOfEmptyFields());
 		}
 		np.fillNumbersFromMatrix(cells);
 
@@ -130,7 +126,7 @@ public class GameClass extends JFrame implements KeyListener {
 		return emptyList;
 	}
 
-	public void placeRandomTwo(ArrayList<int[]> emptyList) {
+	public void placeRandomNumber(ArrayList<int[]> emptyList) {
 		int[][] cells = main_cells.matrix.data;
 		if (emptyList.size() != 0) {
 			Random r = new Random();
@@ -141,7 +137,11 @@ public class GameClass extends JFrame implements KeyListener {
 			int row, col;
 			row = emptyList.get(Result)[0];
 			col = emptyList.get(Result)[1];
-			cells[row][col] = 2;
+
+			if (r.nextDouble() < 0.1)
+				cells[row][col] = 4;
+			else
+				cells[row][col] = 2;
 		}
 	}
 
