@@ -12,9 +12,9 @@ public class ScoreObserver extends Observer {
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		System.out.println(score);
 		score += subject.getState();
-		scoreLabel.displayScore(score);
+		scoreLabel.updateScore(score);
 	}
 
 }

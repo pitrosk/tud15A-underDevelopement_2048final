@@ -28,6 +28,7 @@ public class GameClass extends JFrame implements KeyListener {
 	int c = main_cells.matrix.data[0].length;
 
 	NumbersPanel np;
+	JPanel topPanel = new JPanel(new GridLayout(1, 4));
 	SingleSquareField[] ssf;
 	ScoreLabel score = new ScoreLabel();
 	Subject sbj = new Subject();
@@ -66,8 +67,6 @@ public class GameClass extends JFrame implements KeyListener {
 		np = new NumbersPanel(ssf);
 		add(np, BorderLayout.CENTER);
 
-		JPanel topPanel = new JPanel(new GridLayout(1, 4));
-		score = new ScoreLabel();
 		topPanel.add(new JLabel(""));
 		topPanel.add(new JLabel(""));
 		topPanel.add(new JLabel(""));
@@ -89,6 +88,8 @@ public class GameClass extends JFrame implements KeyListener {
 		}
 		np.fillNumbersFromMatrix(cells);
 		repaint();
+		topPanel.repaint();
+		
 		if (checkWin()) {
 			JOptionPane.showMessageDialog(this, "You Won!\nBut you can still play ;)");
 		}
@@ -184,11 +185,11 @@ public class GameClass extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
+		//SwingUtilities.invokeLater(new Runnable() {
+			//public void run() {
 				GameClass gc = new GameClass();
 				gc.setVisible(true);
-			}
-		});
+			//}
+	//	});
 	}
 }
