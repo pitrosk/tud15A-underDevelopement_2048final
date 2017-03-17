@@ -2,6 +2,7 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,12 +68,11 @@ public class GameLogicClass implements KeyListener {
 			String[] options = { "Play again!", "End game" };
 			int choice = JOptionPane.showOptionDialog(gwc, "Game over!\nDo you wanna play one more time?", "GAME OVER",
 					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, "Play again!");
-			//System.out.println(choice);
 
 			if (choice == 0) {
 				playAgain();
 			} else {
-				// end game
+				gwc.closeApp();
 			}
 		}
 	}

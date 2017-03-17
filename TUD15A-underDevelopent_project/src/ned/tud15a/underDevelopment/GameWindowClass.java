@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -22,7 +23,9 @@ public class GameWindowClass extends JFrame {
 		initUI();
 		repaint();
 	}
-
+	public void closeApp(){
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
 	private void initUI() {
 		setTitle("2048 - the game");
 		setSize(720, 640);
