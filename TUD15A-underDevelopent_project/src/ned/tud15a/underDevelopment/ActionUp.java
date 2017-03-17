@@ -1,10 +1,11 @@
 package ned.tud15a.underDevelopment;
 
 public class ActionUp implements Action {
-	Cells main_cells = Cells.getInstance();
-	int[][] cells = main_cells.matrix.data;
-	int r = main_cells.matrix.data.length;
-	int c = main_cells.matrix.data[0].length;
+	private Cells main_cells = Cells.getInstance();
+	private int[][] cells = main_cells.getMatrix().data;
+	
+	private int r = main_cells.getMatrix().data.length;
+	private int c = main_cells.getMatrix().data[0].length;
 
 	private void shift() {
 		for (int j = 0; j < cells[0].length; j++) {

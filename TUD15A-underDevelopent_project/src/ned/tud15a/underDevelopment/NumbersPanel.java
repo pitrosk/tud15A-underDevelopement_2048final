@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class NumbersPanel extends JPanel {
-	SingleSquareField[] sisf;
+	private SingleSquareField[] sisf;
 
 	public NumbersPanel(SingleSquareField[] ssf) {
 		sisf = ssf;

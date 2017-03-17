@@ -2,30 +2,33 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
-import java.util.*;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class GameWindowClass extends JFrame {
 
-	NumbersPanel np;
-	ScorePanel topPanel;
+	private NumbersPanel np;
+	private ScorePanel topPanel;
 
-	SingleSquareField[] ssf;
-	ScoreDisplay score = new ScoreDisplay();
+	private SingleSquareField[] ssf;
 
+	private ScoreDisplay score = new ScoreDisplay();
+	private HighScoreDisplay hscore = new HighScoreDisplay();
+	
 	public GameWindowClass() {
 		initUI();
 		repaint();
 	}
-	public void closeApp(){
-		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+	public NumbersPanel getNp() {
+		return np;
 	}
+
+	public ScoreDisplay getScore() {
+		return score;
+	}
+
 	private void initUI() {
 		setTitle("2048 - the game");
 		setSize(720, 640);
@@ -39,9 +42,17 @@ public class GameWindowClass extends JFrame {
 		}
 
 		np = new NumbersPanel(ssf);
-		topPanel = new ScorePanel(new GridLayout(1, 4), score);
+		topPanel = new ScorePanel(new GridLayout(1, 2), score, hscore);
 
 		add(np, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
+	}
+
+	public void closeApp() {
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
+
+	public HighScoreDisplay getHighScore() {
+		return hscore;
 	}
 }

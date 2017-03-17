@@ -2,7 +2,6 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,29 +10,37 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 public class GameLogicClass implements KeyListener {
-	GameWindowClass gwc;
-	Cells main_cells = Cells.getInstance();
+	private GameWindowClass gwc;
 
-	int[][] cells = main_cells.matrix.data;
+	private Cells main_cells = Cells.getInstance();
+	private int[][] cells = main_cells.getMatrix().data;
+	private int r = main_cells.getMatrix().data.length;
+	private int c = main_cells.getMatrix().data[0].length;
 
-	boolean alreadyWon = false;
-	int r = main_cells.matrix.data.length;
-	int c = main_cells.matrix.data[0].length;
+	private boolean alreadyWon = false;
 
-	Map<Integer, Action> map;
+	private Map<Integer, Action> map;
 
-	ScoreInformer scInf = new ScoreInformer();
-	ScoreDisplayObserver scObs;
+	private ScoreInformer scInf = new ScoreInformer();
+	private ScoreDisplayObserver scObs;
+	@SuppressWarnings("unused")
+	private HighScoreObserver hscObs;
 
 	public GameLogicClass(GameWindowClass gwc_) {
 		gwc = gwc_;
 		initLogic();
 		initMap();
-		scObs = new ScoreDisplayObserver(scInf, gwc.score);
+		scObs = new ScoreDisplayObserver(scInf, gwc.getScore());
+		hscObs = new HighScoreObserver(scInf, gwc.getHighScore());
 		gwc.addKeyListener(this);
 	}
 
-	public void initMap() {
+	private void initLogic() {
+		placeRandomNumber(returnListOfEmptyFields());
+		gwc.getNp().fillNumbersFromMatrix(cells);
+	}
+
+	private void initMap() {
 		map = new HashMap<Integer, Action>();
 		map.put(KeyEvent.VK_RIGHT, new ActionRight());
 		map.put(KeyEvent.VK_UP, new ActionUp());
@@ -48,17 +55,17 @@ public class GameLogicClass implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		Matrix tempMat = main_cells.matrix.copyMatrix();
+		Matrix tempMat = main_cells.getMatrix().copyMatrix();
 
 		Action a = map.get(e.getKeyCode());
 		if (a != null) {
 			int sum = a.move();
 			if (sum > 0)
 				scInf.setState(sum);
-			if (!main_cells.matrix.equalMatrix(tempMat))
+			if (!main_cells.getMatrix().equalMatrix(tempMat))
 				placeRandomNumber(returnListOfEmptyFields());
 		}
-		gwc.np.fillNumbersFromMatrix(cells);
+		gwc.getNp().fillNumbersFromMatrix(cells);
 		gwc.repaint();
 
 		if (checkWin()) {
@@ -68,7 +75,6 @@ public class GameLogicClass implements KeyListener {
 			String[] options = { "Play again!", "End game" };
 			int choice = JOptionPane.showOptionDialog(gwc, "Game over!\nDo you wanna play one more time?", "GAME OVER",
 					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, "Play again!");
-
 			if (choice == 0) {
 				playAgain();
 			} else {
@@ -85,21 +91,15 @@ public class GameLogicClass implements KeyListener {
 	public void keyTyped(KeyEvent arg0) {
 	}
 
-	private void initLogic() {
-		placeRandomNumber(returnListOfEmptyFields());
-		gwc.np.fillNumbersFromMatrix(cells);
-	}
-	
-	public void playAgain(){
+	private void playAgain() {
 		main_cells.zeroTheMatrix();
 		placeRandomNumber(returnListOfEmptyFields());
-		gwc.np.fillNumbersFromMatrix(cells);
+		gwc.getNp().fillNumbersFromMatrix(cells);
 		scObs.restart();
-		//scObs.score = 0;// TODO: make setter
 		gwc.repaint();
 	}
-	
-	public boolean checkWin() {
+
+	private boolean checkWin() {
 		if (alreadyWon == false) {
 			for (int row = 0; row < r; row++) {
 				for (int column = 0; column < c; column++) {
@@ -113,23 +113,21 @@ public class GameLogicClass implements KeyListener {
 		return false;
 	}
 
-	boolean checkEnd() {
-
+	private boolean checkEnd() {
 		ArrayList<int[]> emptyList = new ArrayList<int[]>();
 		emptyList = returnListOfEmptyFields();
 
 		if (emptyList.size() != 0)
 			return false;
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < r-1; i++) {
+			for (int j = 0; j < r; j++) {
 				if (cells[i][j] == cells[i + 1][j])
 					return false;
 			}
 		}
-
-		for (int j = 0; j < 3; j++) {
-			for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < r-1; j++) {
+			for (int i = 0; i < r; i++) {
 				if (cells[i][j] == cells[i][j + 1])
 					return false;
 			}
@@ -137,8 +135,8 @@ public class GameLogicClass implements KeyListener {
 		return true;
 	}
 
-	public void placeRandomNumber(ArrayList<int[]> emptyList) {
-		int[][] cells = main_cells.matrix.data;
+	private void placeRandomNumber(ArrayList<int[]> emptyList) {
+		int[][] cells = main_cells.getMatrix().data;
 		if (emptyList.size() != 0) {
 			Random r = new Random();
 			int Low = 0;
@@ -156,10 +154,9 @@ public class GameLogicClass implements KeyListener {
 		}
 	}
 
-	public ArrayList<int[]> returnListOfEmptyFields() {
-
+	private ArrayList<int[]> returnListOfEmptyFields() {
 		ArrayList<int[]> emptyList = new ArrayList<int[]>();
-		int[][] cells = main_cells.matrix.data;
+		int[][] cells = main_cells.getMatrix().data;
 		for (int row = 0; row < r; row++) {
 			for (int column = 0; column < c; column++) {
 
@@ -171,7 +168,6 @@ public class GameLogicClass implements KeyListener {
 				}
 			}
 		}
-
 		return emptyList;
 	}
 }
