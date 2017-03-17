@@ -118,14 +118,14 @@ public class GameLogicClass implements KeyListener {
 		if (emptyList.size() != 0)
 			return false;
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < r-1; i++) {
+			for (int j = 0; j < r; j++) {
 				if (cells[i][j] == cells[i + 1][j])
 					return false;
 			}
 		}
-		for (int j = 0; j < 3; j++) {
-			for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < r-1; j++) {
+			for (int i = 0; i < r; i++) {
 				if (cells[i][j] == cells[i][j + 1])
 					return false;
 			}
