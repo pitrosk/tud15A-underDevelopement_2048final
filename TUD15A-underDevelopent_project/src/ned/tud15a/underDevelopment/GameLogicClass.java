@@ -2,7 +2,6 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +23,7 @@ public class GameLogicClass implements KeyListener {
 
 	private ScoreInformer scInf = new ScoreInformer();
 	private ScoreDisplayObserver scObs;
+	@SuppressWarnings("unused")
 	private HighScoreObserver hscObs;
 
 	public GameLogicClass(GameWindowClass gwc_) {

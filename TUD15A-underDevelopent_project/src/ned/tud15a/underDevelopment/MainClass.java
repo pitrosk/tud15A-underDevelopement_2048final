@@ -8,6 +8,7 @@ public class MainClass {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				GameWindowClass gwc = new GameWindowClass();
+				@SuppressWarnings("unused")
 				GameLogicClass glc = new GameLogicClass(gwc);
 				gwc.setVisible(true);
 			}

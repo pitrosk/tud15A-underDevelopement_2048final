@@ -2,13 +2,8 @@ package ned.tud15a.underDevelopment;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
-import java.util.*;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 public class GameWindowClass extends JFrame {
