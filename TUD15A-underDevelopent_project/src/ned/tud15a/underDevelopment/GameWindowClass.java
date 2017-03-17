@@ -19,7 +19,8 @@ public class GameWindowClass extends JFrame {
 	private SingleSquareField[] ssf;
 
 	private ScoreDisplay score = new ScoreDisplay();
-
+	private HighScoreDisplay hscore = new HighScoreDisplay();
+	
 	public GameWindowClass() {
 		initUI();
 		repaint();
@@ -46,7 +47,7 @@ public class GameWindowClass extends JFrame {
 		}
 
 		np = new NumbersPanel(ssf);
-		topPanel = new ScorePanel(new GridLayout(1, 4), score);
+		topPanel = new ScorePanel(new GridLayout(1, 2), score, hscore);
 
 		add(np, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
@@ -54,5 +55,9 @@ public class GameWindowClass extends JFrame {
 
 	public void closeApp() {
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
+
+	public HighScoreDisplay getHighScore() {
+		return hscore;
 	}
 }

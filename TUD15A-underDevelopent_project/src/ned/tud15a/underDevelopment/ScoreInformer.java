@@ -6,14 +6,19 @@ import java.util.List;
 public class ScoreInformer {
 
 	private List<ScoreObserver> scoreObservers = new ArrayList<ScoreObserver>();
-	private int state;
-
-	public int getState() {
-		return state;
+	private int score;
+	private int highScore;
+	
+	public int getScore() {
+		return score;
 	}
-
-	public void setState(int state) {
-		this.state = state;
+	public int getHighScore() {
+		return highScore;
+	}
+	public void setState(int addedScore) {
+		score += addedScore;
+		if(score > highScore)
+			highScore = score;
 		notifyAllObservers();
 	}
 

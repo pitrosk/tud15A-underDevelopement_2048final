@@ -24,12 +24,14 @@ public class GameLogicClass implements KeyListener {
 
 	private ScoreInformer scInf = new ScoreInformer();
 	private ScoreDisplayObserver scObs;
+	private HighScoreObserver hscObs;
 
 	public GameLogicClass(GameWindowClass gwc_) {
 		gwc = gwc_;
 		initLogic();
 		initMap();
 		scObs = new ScoreDisplayObserver(scInf, gwc.getScore());
+		hscObs = new HighScoreObserver(scInf, gwc.getHighScore());
 		gwc.addKeyListener(this);
 	}
 
