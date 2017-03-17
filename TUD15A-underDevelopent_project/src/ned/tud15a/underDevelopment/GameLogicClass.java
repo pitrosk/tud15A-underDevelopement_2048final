@@ -22,6 +22,7 @@ public class GameLogicClass implements KeyListener {
 	private Map<Integer, Action> map;
 
 	private ScoreInformer scInf = new ScoreInformer();
+	@SuppressWarnings("unused")
 	private ScoreDisplayObserver scObs;
 	@SuppressWarnings("unused")
 	private HighScoreObserver hscObs;
@@ -95,7 +96,7 @@ public class GameLogicClass implements KeyListener {
 		main_cells.zeroTheMatrix();
 		placeRandomNumber(returnListOfEmptyFields());
 		gwc.getNp().fillNumbersFromMatrix(cells);
-		scObs.restart();
+		scInf.restart();
 		gwc.repaint();
 	}
 

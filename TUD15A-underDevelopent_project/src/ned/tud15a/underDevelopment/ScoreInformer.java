@@ -25,7 +25,13 @@ public class ScoreInformer {
 	public void attach(ScoreObserver scoreObserver) {
 		scoreObservers.add(scoreObserver);
 	}
-
+	
+	public void restart(){
+		score = 0;
+		notifyAllObservers();
+	}
+	
+	
 	public void notifyAllObservers() {
 		for (ScoreObserver scoreObserver : scoreObservers) {
 			scoreObserver.update();
