@@ -1,8 +1,8 @@
 package ned.tud15a.underDevelopment;
 
 public class ScoreDisplayObserver extends ScoreObserver {
-	int score = 0;
-	ScoreDisplay scoreDisplay;
+	private int score = 0;
+	private ScoreDisplay scoreDisplay;
 
 	public ScoreDisplayObserver(ScoreInformer scoreInformer, ScoreDisplay scoreLab) {
 		this.scoreInformer = scoreInformer;

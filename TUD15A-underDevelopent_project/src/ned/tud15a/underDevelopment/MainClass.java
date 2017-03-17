@@ -9,7 +9,6 @@ public class MainClass {
 			public void run() {
 				GameWindowClass gwc = new GameWindowClass();
 				GameLogicClass glc = new GameLogicClass(gwc);
-				
 				gwc.setVisible(true);
 			}
 		});

@@ -13,19 +13,26 @@ import javax.swing.SwingUtilities;
 @SuppressWarnings("serial")
 public class GameWindowClass extends JFrame {
 
-	NumbersPanel np;
-	ScorePanel topPanel;
+	private NumbersPanel np;
+	private ScorePanel topPanel;
 
-	SingleSquareField[] ssf;
-	ScoreDisplay score = new ScoreDisplay();
+	private SingleSquareField[] ssf;
+
+	private ScoreDisplay score = new ScoreDisplay();
 
 	public GameWindowClass() {
 		initUI();
 		repaint();
 	}
-	public void closeApp(){
-		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+
+	public NumbersPanel getNp() {
+		return np;
 	}
+
+	public ScoreDisplay getScore() {
+		return score;
+	}
+
 	private void initUI() {
 		setTitle("2048 - the game");
 		setSize(720, 640);
@@ -43,5 +50,9 @@ public class GameWindowClass extends JFrame {
 
 		add(np, BorderLayout.CENTER);
 		add(topPanel, BorderLayout.NORTH);
+	}
+
+	public void closeApp() {
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 }

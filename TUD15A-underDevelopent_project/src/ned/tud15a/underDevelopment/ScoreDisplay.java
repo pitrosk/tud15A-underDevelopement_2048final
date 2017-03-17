@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 
 @SuppressWarnings("serial")
 public class ScoreDisplay extends JComponent {
-	int actualScore;
+	private int actualScore;
 
 	public ScoreDisplay() {
 		setPreferredSize(new Dimension(120, 30));
